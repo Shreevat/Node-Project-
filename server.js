@@ -1,4 +1,5 @@
 const express = require("express");
+const errorHandler = require("./middleware/errorHandler");
 const dotenv = require("dotenv").config();
 
 console.log("test");
@@ -12,7 +13,9 @@ const port = process.env.PORT || 5000;
 //   res.status(200).res.json({ message: "Get all contacts" });
 // });      insteaduse
 
+app.use(express.json()); //provides a parser to parse datastream from client
 app.use("/api/contacts", require("./routes/contactRoutes")); //middleware
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`server running on port ${port}`);
