@@ -53,8 +53,12 @@ const updateContact = asyncHandler(async (req, res) => {
     throw new Error("not found");
   }
 
-  // const updatedContact = await Contact.
-  res.status(200).json({ message: `Update contact for ${req.params.id}` });
+  const updatedContact = await Contact.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    { new: true } //return updated contact instead of old )
+  );
+  res.status(200).json(updatedContact);
 });
 
 //description: Delete contact by id
@@ -62,7 +66,13 @@ const updateContact = asyncHandler(async (req, res) => {
 //acesss define. public
 
 const deleteContact = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: `Delete contact for ${req.params.id}` });
+  const contact = await Contact.findById(req.params.id);
+  if (!contact) {
+    res.status(404);
+    throw new Error("not found");
+  }
+  await Contact.deleteOne();
+  res.status(200).json(contact);
 });
 
 module.exports = {
