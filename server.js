@@ -15,6 +15,7 @@ const port = process.env.PORT || 5000;
 
 app.use(express.json()); //provides a parser to parse datastream from client
 app.use("/api/contacts", require("./routes/contactRoutes")); //middleware
+app.use("/api/users", require("./routes/userRoutes"));
 app.use(errorHandler);
 
 //whenever youu have to make use of middleware --- > app.use
